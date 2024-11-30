@@ -1,43 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FizzBuzz.Cli
+﻿namespace FizzBuzz.Cli
 {
     public class Formatter(int i)
     {
         public string FormatWithRules()
         {
-            return FormatWithRulesInternal(i);
-        }
-        public static string FormatWithRules(int i1)
-        {
-            return new Formatter(i1).FormatWithRules();
-        }
-
-        private static string FormatWithRulesInternal(int i1)
-        {
             string? line;
-            if (i1 % 3 == 0 && i1 % 5 == 0)
+            if (i % 3 == 0 && i % 5 == 0)
             {
                 var fizzbuzz = "FizzBuzz";
                 line = fizzbuzz;
             }
-            else if (i1 % 3 == 0)
+            else if (i % 3 == 0)
             {
                 var fizz = "Fizz";
                 line = fizz;
             }
-            else if (i1 % 5 == 0)
+            else if (i % 5 == 0)
             {
                 var buzz = "Buzz";
                 line = buzz;
             }
             else
             {
-                line = i1.ToString();
+                line = i.ToString();
             }
             string s = line;
             return s;
