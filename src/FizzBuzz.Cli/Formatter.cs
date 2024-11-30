@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz.Cli
 {
-    public class Formatter
+    public class Formatter(int i)
     {
+        public string FormatWithRules()
+        {
+            return FormatWithRulesInternal(i);
+        }
         public static string FormatWithRules(int i1)
+        {
+            return new Formatter(i1).FormatWithRules();
+        }
+
+        private static string FormatWithRulesInternal(int i1)
         {
             string? line;
             if (i1 % 3 == 0 && i1 % 5 == 0)
