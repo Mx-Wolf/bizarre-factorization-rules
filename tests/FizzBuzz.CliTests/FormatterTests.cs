@@ -43,6 +43,6 @@ public class FormatterTests
 
     private Formatter GetSut()
     {
-        return new Formatter(i);
+        return new Formatter(i, new Rules(i));
     }
 }
