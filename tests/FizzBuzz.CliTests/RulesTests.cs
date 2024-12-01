@@ -10,7 +10,7 @@ namespace FizzBuzz.CliTests
         {
             baseValue = new Random().Next(33) * 3;
             var sut = GetSut();
-            Assert.True(sut.Rule3());
+            Assert.True(sut.Rule3(baseValue));
         }
 
         [Fact]
@@ -18,27 +18,27 @@ namespace FizzBuzz.CliTests
         {
             baseValue = new Random().Next(33) * 3 + 1;
             var sut = GetSut();
-            Assert.False(sut.Rule3());
+            Assert.False(sut.Rule3(baseValue));
         }
         [Fact]
-        public void Rule5TrueOnTimes3()
+        public void Rule5TrueOnTimes5()
         {
             baseValue = new Random().Next(20) * 5;
             var sut = GetSut();
-            Assert.True(sut.Rule5());
+            Assert.True(sut.Rule5(baseValue));
         }
 
         [Fact]
-        public void Rule5FalseOnTimes3Plus1()
+        public void Rule5FalseOnTimes5Plus1()
         {
             baseValue = new Random().Next(20) * 5 + 1;
             var sut = GetSut();
-            Assert.False(sut.Rule5());
+            Assert.False(sut.Rule5(baseValue));
         }
 
         private Rules GetSut()
         {
-            return new Rules(baseValue);
+            return new Rules();
         }
     }
 }

@@ -1,31 +1,17 @@
 ﻿namespace FizzBuzz.Cli
 {
-    public class Formatter(int i, Rules rules)
+    public class Formatter(
+        Rules rules,
+        IFactory factory)
     {
-        public string FormatWithRules()
-        {
-            string? line;
-            if (new Rules(i).Rule3() && new Rules(i).Rule5())
-            {
-                var fizzbuzz = "FizzBuzz";
-                line = fizzbuzz;
-            }
-            else if (new Rules(i).Rule3())
-            {
-                var fizz = "Fizz";
-                line = fizz;
-            }
-            else if (new Rules(i).Rule5())
-            {
-                var buzz = "Buzz";
-                line = buzz;
-            }
-            else
-            {
-                line = i.ToString();
-            }
-            string s = line;
-            return s;
-        }
+        public string FormatWithRules(int x) => ChooseFormat(x).Format(x);
+
+        private IFormatInt ChooseFormat(int x) => Rule3AndRule5(x) ? factory.FizzBuzz() : Rule5OrRule3(x);
+
+        private bool Rule3AndRule5(int x) => rules.Rule3(x) && rules.Rule5(x);
+
+        private IFormatInt Rule5OrRule3(int x) => rules.Rule3(x) ? factory.Fizz() : Rule5OrNone(x);
+
+        private IFormatInt Rule5OrNone(int x) => rules.Rule5(x) ? factory.Buzz() : factory.None();
     }
 }

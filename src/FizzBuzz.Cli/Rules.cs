@@ -1,14 +1,14 @@
 ﻿namespace FizzBuzz.Cli;
 
-public class Rules(int i)
+public class Rules()
 {
-    public bool Rule5()
+    public bool Rule5(int x)
     {
-        return i % 5 == 0;
+        return x % 5 == 0;
     }
 
-    public bool Rule3()
+    public bool Rule3(int x)
     {
-        return i % 3 == 0;
+        return x % 3 == 0;
     }
 }
