@@ -2,9 +2,9 @@
 
 using FizzBuzz.Cli;
 
-for (var i = 1; i <= 100; i++)
+Action<string> callback = Console.WriteLine;
+var generator = new Generator(1, 100);
+foreach (var result in generator.AllLines())
 {
-    var result = new Formatter(i).FormatWithRules();
-    Console.WriteLine(result);
+    callback(result);
 }
-
