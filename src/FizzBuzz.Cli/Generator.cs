@@ -1,12 +1,11 @@
 ﻿namespace FizzBuzz.Cli
 {
-    public class Generator(int start, int count)
+    public class Generator(int start, int count, Formatter formatter)
     {
-        private readonly Rules rules = new Rules();
 
         public IEnumerable<string> AllLines()
         {
-            return Enumerable.Range(start, count).Select((i) => new Formatter(rules, new Factory()).FormatWithRules(i));
+            return Enumerable.Range(start, count).Select(formatter.FormatWithRules);
         }
     }
 }

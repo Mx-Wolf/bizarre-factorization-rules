@@ -16,7 +16,7 @@ namespace FizzBuzz.CliTests
 
         private Generator GetSut()
         {
-            return new Generator(start, count);
+            return new Generator(start, count, new Formatter(new Rules(), new Factory()));
         }
     }
 }
