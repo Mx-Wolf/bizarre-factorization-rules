@@ -1,16 +1,20 @@
 using FizzBuzz.Cli;
+using Microsoft.Extensions.Options;
+using Moq;
 
 namespace FizzBuzz.CliTests;
 
 public class FormatterTests
 {
+    private readonly Mock<IRules> rules = new();
+    private readonly Mock<IOptions<WordSettings>> wordSettings = new();
     private int i = 0;
     [Fact]
     public void MakesFizz()
     {
         i = 3;
         var sut = GetSut();
-        var result = sut.FormatWithRules();
+        var result = sut.FormatWithRules(i);
         Assert.Equal("Fizz", result);
     }
 
@@ -19,7 +23,7 @@ public class FormatterTests
     {
         i = 5;
         var sut = GetSut();
-        var result = sut.FormatWithRules();
+        var result = sut.FormatWithRules(i);
         Assert.Equal("Buzz", result);
     }
 
@@ -28,7 +32,7 @@ public class FormatterTests
     {
         i = 15;
         var sut = GetSut();
-        var result = sut.FormatWithRules();
+        var result = sut.FormatWithRules(i);
         Assert.Equal("FizzBuzz", result);
     }
 
@@ -37,12 +41,12 @@ public class FormatterTests
     {
         i = 16;
         var sut = GetSut();
-        var result = sut.FormatWithRules();
+        var result = sut.FormatWithRules(i);
         Assert.Equal("16", result);
     }
 
     private Formatter GetSut()
     {
-        return new Formatter(i, new Rules(i));
+        return new Formatter(this.rules.Object, this.wordSettings.Object);
     }
 }

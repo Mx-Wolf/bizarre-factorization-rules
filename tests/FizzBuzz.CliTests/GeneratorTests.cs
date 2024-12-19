@@ -1,23 +1,27 @@
-﻿using FizzBuzz.Cli;
+﻿using AutoFixture;
+using FizzBuzz.Cli;
+using Microsoft.Extensions.Options;
+using Moq;
 
 namespace FizzBuzz.CliTests
 {
     public class GeneratorTests
     {
-        private const int Start = 1;
-        private int count = 100;
+        private readonly Mock<IOptions<GeneratorSettings>> generatorSettings = new();
+        private readonly Mock<IFormatter> formatter = new();
+        private readonly Fixture fix = new();
         [Fact]
         public void ProducesCountItems()
         {
-            count = 10;
+            var settings = this.fix.Create<GeneratorSettings>();
+            generatorSettings.Setup(e => e.Value).Returns(settings);
             var sut = GetSut();
-            Assert.Equal(count, sut.AllLines().Count());
+            Assert.Equal(settings.Count, sut.AllLines().Count());
         }
 
         private Generator GetSut()
         {
-            Rules rules = new Rules();
-            return new Generator(Start, count, new Formatter( rules));
+            return new Generator(this.generatorSettings.Object, this.formatter.Object);
         }
     }
 }
