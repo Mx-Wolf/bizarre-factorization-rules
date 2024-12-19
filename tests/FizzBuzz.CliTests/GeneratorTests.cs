@@ -4,7 +4,7 @@ namespace FizzBuzz.CliTests
 {
     public class GeneratorTests
     {
-        private int start = 1;
+        private const int Start = 1;
         private int count = 100;
         [Fact]
         public void ProducesCountItems()
@@ -16,7 +16,8 @@ namespace FizzBuzz.CliTests
 
         private Generator GetSut()
         {
-            return new Generator(start, count);
+            Rules rules = new Rules();
+            return new Generator(Start, count, new Formatter( rules));
         }
     }
 }

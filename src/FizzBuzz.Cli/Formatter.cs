@@ -1,31 +1,22 @@
-﻿namespace FizzBuzz.Cli
+﻿using Microsoft.Extensions.Options;
+
+namespace FizzBuzz.Cli
 {
-    public class Formatter(int i, Rules rules)
+    public class Formatter( IRules rules, IOptions<WordSettings> options): IFormatter
     {
-        public string FormatWithRules()
+        public string FormatWithRules(int i)
         {
-            string? line;
-            if (new Rules(i).Rule3() && new Rules(i).Rule5())
+            if (rules.Rule3(i) && rules.Rule5(i))
             {
-                var fizzbuzz = "FizzBuzz";
-                line = fizzbuzz;
+                return options.Value.FizzBuzz;
             }
-            else if (new Rules(i).Rule3())
+
+            if (rules.Rule3(i))
             {
-                var fizz = "Fizz";
-                line = fizz;
+                return options.Value.Fizz;
             }
-            else if (new Rules(i).Rule5())
-            {
-                var buzz = "Buzz";
-                line = buzz;
-            }
-            else
-            {
-                line = i.ToString();
-            }
-            string s = line;
-            return s;
+
+            return rules.Rule5(i) ? options.Value.Buzz : i.ToString();
         }
     }
 }
