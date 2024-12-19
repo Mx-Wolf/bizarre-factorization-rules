@@ -1,6 +1,8 @@
-﻿namespace FizzBuzz.Cli;
+﻿using Microsoft.Extensions.Logging;
 
-public class Rules():IRules
+namespace FizzBuzz.Cli;
+
+public class Rules(ILogger<Rules> logger):IRules
 {
     public bool Rule5(int i)
     {
@@ -9,6 +11,7 @@ public class Rules():IRules
 
     public bool Rule3(int i)
     {
+        logger.Rule3WorkedWith(i);
         return i % 3 == 0;
     }
 }

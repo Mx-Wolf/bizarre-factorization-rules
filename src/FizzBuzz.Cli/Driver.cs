@@ -1,12 +1,12 @@
 ﻿namespace FizzBuzz.Cli;
 
-public class Driver(IGenerator generator, Action<string> callback): IDriver
+public class Driver(IGenerator generator, IConsumer consumer): IDriver
 {
     public void Run()
     {
-        foreach (var result in generator.AllLines())
+        foreach (var line in generator.AllLines())
         {
-            callback(result);
+            consumer.Accept(line);
         }
     }
 }

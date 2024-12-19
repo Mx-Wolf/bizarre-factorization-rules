@@ -1,3 +1,4 @@
+using AutoFixture;
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -8,32 +9,46 @@ public class FormatterTests
 {
     private readonly Mock<IRules> rules = new();
     private readonly Mock<IOptions<WordSettings>> wordSettings = new();
+    private readonly Fixture fix = new();
     private int i = 0;
     [Fact]
     public void MakesFizz()
     {
         i = 3;
+        var settings = fix.Create<WordSettings>();
+        rules.Setup(e => e.Rule3(i)).Returns(true);
+        wordSettings.Setup(e => e.Value).Returns(settings);
+        
         var sut = GetSut();
         var result = sut.FormatWithRules(i);
-        Assert.Equal("Fizz", result);
+        Assert.Equal(settings.Fizz, result);
     }
 
     [Fact]
     public void MakesBuzz()
     {
         i = 5;
+        var settings = fix.Create<WordSettings>();
+        rules.Setup(e => e.Rule5(i)).Returns(true);
+        wordSettings.Setup(e => e.Value).Returns(settings);
+
         var sut = GetSut();
         var result = sut.FormatWithRules(i);
-        Assert.Equal("Buzz", result);
+        Assert.Equal(settings.Buzz, result);
     }
 
     [Fact]
     public void MakesFizzBuzz()
     {
         i = 15;
+       
+        var settings = fix.Create<WordSettings>();
+        rules.Setup(e => e.Rule3(i)).Returns(true);
+        rules.Setup(e => e.Rule5(i)).Returns(true);
+        wordSettings.Setup(e => e.Value).Returns(settings);
         var sut = GetSut();
         var result = sut.FormatWithRules(i);
-        Assert.Equal("FizzBuzz", result);
+        Assert.Equal(settings.FizzBuzz, result);
     }
 
     [Fact]

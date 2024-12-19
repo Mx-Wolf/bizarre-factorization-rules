@@ -1,10 +1,13 @@
 ﻿using FizzBuzz.Cli;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace FizzBuzz.CliTests
 {
     public class RulesTests
     {
         private int baseValue = 0;
+        private readonly Mock<ILogger<Rules>> logger = new();
         [Fact]
         public void Rule3TrueOnTimes3()
         {
@@ -38,7 +41,7 @@ namespace FizzBuzz.CliTests
 
         private Rules GetSut()
         {
-            return new Rules();
+            return new Rules(this.logger.Object);
         }
     }
 }
