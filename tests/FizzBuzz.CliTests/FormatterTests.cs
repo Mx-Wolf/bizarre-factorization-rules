@@ -1,4 +1,5 @@
 using AutoFixture;
+using FizzBuzz.Application.TwoRules;
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
 using Moq;

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using FizzBuzz.Application;
+using Microsoft.Extensions.Hosting;
 
 namespace FizzBuzz.Cli;
 

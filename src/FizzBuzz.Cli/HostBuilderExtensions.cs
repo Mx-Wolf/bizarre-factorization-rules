@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FizzBuzz.Application;
+using FizzBuzz.Application.TwoRules;
+using FizzBuzz.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace FizzBuzz.Cli;

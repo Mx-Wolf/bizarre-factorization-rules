@@ -1,4 +1,6 @@
 ﻿using AutoFixture;
+using FizzBuzz.Application;
+using FizzBuzz.Application.TwoRules;
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

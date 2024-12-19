@@ -1,4 +1,6 @@
-﻿namespace FizzBuzz.Cli;
+﻿using FizzBuzz.Application;
+
+namespace FizzBuzz.Infrastructure;
 
 public class Consumer:IConsumer
 {

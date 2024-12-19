@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FizzBuzz.Cli
+namespace FizzBuzz.Application
 {
     public class Generator(IOptions<GeneratorSettings> settings, IFormatter formatter,ILogger<Generator> logger): IGenerator
     {

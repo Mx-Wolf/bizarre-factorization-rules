@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FizzBuzz.Application\FizzBuzz.Application.csproj" />
+    <ProjectReference Include="..\FizzBuzz.Application.TwoRules\FizzBuzz.Application.TwoRules.csproj" />
+    <ProjectReference Include="..\FizzBuzz.Application\FizzBuzz.Application.csproj" />
+    <ProjectReference Include="..\FizzBuzz.Infrastructure\FizzBuzz.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

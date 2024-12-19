@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Application.TwoRules;
 
 public static partial class RulesLoggerMessages
 {

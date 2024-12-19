@@ -1,4 +1,4 @@
-﻿namespace FizzBuzz.Cli;
+﻿namespace FizzBuzz.Application.TwoRules;
 
 public interface IRules
 {

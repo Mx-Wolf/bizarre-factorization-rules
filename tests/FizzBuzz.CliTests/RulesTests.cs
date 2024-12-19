@@ -1,4 +1,5 @@
-﻿using FizzBuzz.Cli;
+﻿using FizzBuzz.Application.TwoRules;
+using FizzBuzz.Cli;
 using Microsoft.Extensions.Logging;
 using Moq;
 

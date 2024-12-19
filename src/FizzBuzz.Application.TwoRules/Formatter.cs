@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace FizzBuzz.Cli
+namespace FizzBuzz.Application.TwoRules
 {
     public class Formatter( IRules rules, IOptions<WordSettings> options): IFormatter
     {

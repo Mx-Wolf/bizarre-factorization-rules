@@ -1,4 +1,4 @@
-﻿namespace FizzBuzz.Cli;
+﻿namespace FizzBuzz.Application;
 
 public class Driver(IGenerator generator, IConsumer consumer): IDriver
 {
