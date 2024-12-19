@@ -2,5 +2,5 @@
 
 public interface IGenerator
 {
-    IEnumerable<string> AllLines();
+    IEnumerable<string> Sequence();
 }

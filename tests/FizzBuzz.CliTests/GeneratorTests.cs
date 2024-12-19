@@ -20,7 +20,7 @@ namespace FizzBuzz.CliTests
             var settings = this.fix.Create<GeneratorSettings>();
             generatorSettings.Setup(e => e.Value).Returns(settings);
             var sut = GetSut();
-            Assert.Equal(settings.Count, sut.AllLines().Count());
+            Assert.Equal(settings.Count, sut.Sequence().Count());
         }
 
         private Generator GetSut()

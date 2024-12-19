@@ -5,7 +5,7 @@ namespace FizzBuzz.Application
 {
     public class Generator(IOptions<GeneratorSettings> settings, IFormatter formatter,ILogger<Generator> logger): IGenerator
     {
-        public IEnumerable<string> AllLines()
+        public IEnumerable<string> Sequence()
         {
             try
             {
