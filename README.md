@@ -3,4 +3,4 @@ Ridiculous Code Factorization
 
 ## The Task
 
-_Write a C# program that outputs numbers from 1 to 100 in decimal form, replacing numbers divisible by 3 with "Fizz", numbers divisible by 5 with "Buzz", and numbers divisible by both 3 and 5 with "FizzBuzz". Use the modulo operator to check divisibility._
+_Develop a C# program that prints numbers between 1 and 100 to the console, with specific variations based on the number's divisibility. The program should output "Fizz" instead of numbers that are multiples of 3, "Buzz" instead of numbers that are multiples of 5, and "FizzBuzz" instead of numbers that are multiples of both 3 and 5._
