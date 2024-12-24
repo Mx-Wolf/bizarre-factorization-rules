@@ -1,9 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Text;
-
-Console.WriteLine(
-    Enumerable.Range(1, 100)
+﻿Console.Write(
+    Enumerable
+        .Range(1, 100)
         .Select(x => (x % 3, x % 5) switch
         {
             (0, 0) => "FizzBuzz", 
@@ -13,10 +10,4 @@ Console.WriteLine(
         })
         .Aggregate(
             new StringBuilder(), 
-            (a, b) =>
-            {
-                a.Append(b).Append(
-                    Environment.NewLine); 
-                return a;
-            }));
-
+            (a, b) => a.Append(b).Append(Environment.NewLine)));
