@@ -4,19 +4,18 @@ namespace FizzBuzz.CliTests
 {
     public class GeneratorTests
     {
-        private int start = 1;
-        private int count = 100;
-        [Fact]
-        public void ProducesCountItems()
+        [Theory]
+        [InlineData(1,100,100)]
+        public void GeneratorCount(int lo, int hi, int count)
         {
-            count = 10;
-            var sut = GetSut();
-            Assert.Equal(count, sut.AllLines().Count());
+            var sut = GetSut(lo, hi);
+            var resultCount = sut.GetSequence().Count();
+            Assert.Equal(count, resultCount);
         }
 
-        private Generator GetSut()
+        private static Generator GetSut(int lo, int hi)
         {
-            return new Generator(start, count);
+            return new Generator(lo, hi);
         }
     }
 }
