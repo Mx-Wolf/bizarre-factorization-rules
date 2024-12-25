@@ -6,7 +6,8 @@ internal class Program
     {
         var outFormatProvider = Console.Out.FormatProvider;
         var formatter = new Formatter(outFormatProvider);
-        for (var i = 1; i <= 100; i++)
+        var generator = new Generator(1, 100);
+        foreach(var i in generator.GetSequence())
         {
             var line = formatter.Format(i);
             Console.WriteLine(line);
