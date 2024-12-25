@@ -1,19 +1,15 @@
-﻿for (var i = 1; i <= 100; i++)
+﻿using FizzBuzz.Cli;
+
+internal class Program
 {
-    if (i % 3 == 0 && i % 5 == 0)
+    public static void Main(string[] args)
     {
-        Console.WriteLine("FizzBuzz");
-    }
-    else if (i % 3 == 0)
-    {
-        Console.WriteLine("Fizz");
-    }
-    else if (i % 5 == 0)
-    {
-        Console.WriteLine("Buzz");
-    }
-    else
-    {
-        Console.WriteLine(i);
+        var outFormatProvider = Console.Out.FormatProvider;
+        var formatter = new Formatter(outFormatProvider);
+        for (var i = 1; i <= 100; i++)
+        {
+            var line = formatter.Format(i);
+            Console.WriteLine(line);
+        }
     }
 }
