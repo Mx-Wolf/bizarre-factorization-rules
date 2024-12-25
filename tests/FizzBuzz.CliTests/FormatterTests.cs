@@ -1,48 +1,25 @@
+﻿using System.Globalization;
 using FizzBuzz.Cli;
 
-namespace FizzBuzz.CliTests;
-
-public class FormatterTests
+namespace FizzBuzz.CliTests
 {
-    private int i = 0;
-    [Fact]
-    public void MakesFizz()
+    public class FormatterTests
     {
-        i = 3;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("Fizz", result);
-    }
+        [Theory]
+        [InlineData(3, "Fizz")]
+        [InlineData(5, "Buzz")]
+        [InlineData(15, "FizzBuzz")]
+        [InlineData(16, "16")]
+        public void BasicFormattingRules(int i, string expected)
+        {
+            var sut = GetSut();
+            var result = sut.Format(i);
+            Assert.Equal(expected, result);
+        }
 
-    [Fact]
-    public void MakesBuzz()
-    {
-        i = 5;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("Buzz", result);
-    }
-
-    [Fact]
-    public void MakesFizzBuzz()
-    {
-        i = 15;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("FizzBuzz", result);
-    }
-
-    [Fact]
-    public void MakesDigits()
-    {
-        i = 16;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("16", result);
-    }
-
-    private Formatter GetSut()
-    {
-        return new Formatter(i);
+        private Formatter GetSut()
+        {
+            return new Formatter(CultureInfo.InvariantCulture, new Rules());
+        }
     }
 }
