@@ -1,4 +1,4 @@
-public  class Generator(int lo, int hi)
+public  class Generator(int lo, int hi) : IGenerator
 {
     public IEnumerable<int> GetSequence()
     {

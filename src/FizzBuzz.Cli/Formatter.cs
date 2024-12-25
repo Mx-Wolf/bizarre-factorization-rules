@@ -1,6 +1,6 @@
 namespace FizzBuzz.Cli;
 
-public class Formatter(IFormatProvider ouFormatProvider)
+public class Formatter(IFormatProvider formatProvider) : IFormatter
 {
     public string Format(int i)
     {
@@ -8,18 +8,18 @@ public class Formatter(IFormatProvider ouFormatProvider)
         {
             return "FizzBuzz";
         }
-        else if (i % 3 == 0)
+
+        if (i % 3 == 0)
         {
             return "Fizz";
         }
-        else if (i % 5 == 0)
+
+        if (i % 5 == 0)
         {
             return "Buzz";
         }
-        else
-        {
-            return i.ToString(ouFormatProvider);
-        }
+
+        return i.ToString(formatProvider);
 
     }
 }
