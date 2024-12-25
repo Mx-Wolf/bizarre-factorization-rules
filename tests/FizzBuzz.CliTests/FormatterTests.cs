@@ -19,7 +19,7 @@ namespace FizzBuzz.CliTests
 
         private Formatter GetSut()
         {
-            return new Formatter(CultureInfo.InvariantCulture);
+            return new Formatter(CultureInfo.InvariantCulture, new Rules());
         }
     }
 }

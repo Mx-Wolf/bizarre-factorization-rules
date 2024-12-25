@@ -1,4 +1,6 @@
-﻿namespace FizzBuzz.CliTests
+﻿using FizzBuzz.Cli;
+
+namespace FizzBuzz.CliTests
 {
     public class GeneratorTests
     {

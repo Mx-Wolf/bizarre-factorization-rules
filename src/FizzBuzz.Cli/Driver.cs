@@ -1,4 +1,4 @@
-using FizzBuzz.Cli;
+namespace FizzBuzz.Cli;
 
 public class Driver(IGenerator generator, IFormatter formatter, ICollector collector) : IDriver
 {
@@ -6,8 +6,7 @@ public class Driver(IGenerator generator, IFormatter formatter, ICollector colle
     {
         foreach (var i in generator.GetSequence())
         {
-            var line = formatter.Format(i);
-            collector.Collect(line);
+            collector.Collect(formatter.Format(i));
         }
     }
 }

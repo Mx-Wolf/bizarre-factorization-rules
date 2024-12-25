@@ -1,25 +1,13 @@
 namespace FizzBuzz.Cli;
 
-public class Formatter(IFormatProvider formatProvider) : IFormatter
+public class Formatter(IFormatProvider formatProvider, IRules rules) : IFormatter
 {
-    public string Format(int i)
-    {
-        if (i % 3 == 0 && i % 5 == 0)
+    public string Format(int i) =>
+        (rules.RuleSmallerDivisor(i), rules.RuleLargerDivisor(i)) switch
         {
-            return "FizzBuzz";
-        }
-
-        if (i % 3 == 0)
-        {
-            return "Fizz";
-        }
-
-        if (i % 5 == 0)
-        {
-            return "Buzz";
-        }
-
-        return i.ToString(formatProvider);
-
-    }
+            (true, true) => "FizzBuzz",
+            (true, _) => "Fizz",
+            (_, true) => "Buzz",
+            _ => i.ToString(formatProvider)
+        };
 }
