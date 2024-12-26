@@ -1,31 +1,28 @@
-﻿namespace FizzBuzz.Cli
+using Microsoft.Extensions.Options;
+
+namespace FizzBuzz.Cli;
+
+public class Formatter : IFormatter
 {
-    public class Formatter(int i, Rules rules)
+    private readonly IFormatProvider formatProvider;
+    private readonly IOptions<FormatterSettings> options;
+    private readonly string both;
+    private readonly IRules rules;
+
+    public Formatter(IFormatProvider formatProvider, IOptions<FormatterSettings> options, IRules rules)
     {
-        public string FormatWithRules()
-        {
-            string? line;
-            if (new Rules(i).Rule3() && new Rules(i).Rule5())
-            {
-                var fizzbuzz = "FizzBuzz";
-                line = fizzbuzz;
-            }
-            else if (new Rules(i).Rule3())
-            {
-                var fizz = "Fizz";
-                line = fizz;
-            }
-            else if (new Rules(i).Rule5())
-            {
-                var buzz = "Buzz";
-                line = buzz;
-            }
-            else
-            {
-                line = i.ToString();
-            }
-            string s = line;
-            return s;
-        }
+        this.options = options;
+        this.both = this.options.Value.Both();
+        this.formatProvider = formatProvider;
+        this.rules = rules;
     }
+
+    public string Format(int i) =>
+        (rules.IsSmaller(i), rules.IsLarger(i)) switch
+        {
+            (true, true) => this.both,
+            (true, _) => this.options.Value.Smaller,
+            (_, true) => this.options.Value.Larger,
+            _ => i.ToString(formatProvider)
+        };
 }

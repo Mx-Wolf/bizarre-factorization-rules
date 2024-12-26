@@ -1,10 +1,12 @@
-﻿namespace FizzBuzz.Cli
+using Microsoft.Extensions.Options;
+
+namespace FizzBuzz.Cli;
+
+public class Generator(IOptions<GeneratorSettings> options) : IGenerator
 {
-    public class Generator(int start, int count)
+    public IEnumerable<int> GetRange()
     {
-        public IEnumerable<string> AllLines()
-        {
-            return Enumerable.Range(start, count).Select((i) => new Formatter(i, new Rules(i)).FormatWithRules());
-        }
+        var enumerable = Enumerable.Range(options.Value.Lo,(options.Value.Hi-options.Value.Lo)+1);
+        return enumerable;
     }
 }

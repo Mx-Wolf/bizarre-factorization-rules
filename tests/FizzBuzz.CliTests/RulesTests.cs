@@ -1,44 +1,44 @@
-﻿using FizzBuzz.Cli;
+﻿using AutoFixture;
+using FizzBuzz.Cli;
+using Microsoft.Extensions.Options;
+using Moq;
 
-namespace FizzBuzz.CliTests
+namespace FizzBuzz.CliTests;
+
+public class RulesTests
 {
-    public class RulesTests
+    private Mock<IOptions<RulesSettings>> options = new();
+    private readonly Fixture fix = new();
+
+    public RulesTests()
     {
-        private int baseValue = 0;
-        [Fact]
-        public void Rule3TrueOnTimes3()
-        {
-            baseValue = new Random().Next(33) * 3;
-            var sut = GetSut();
-            Assert.True(sut.Rule3());
-        }
+        fix.Customize<RulesSettings>(e => e.With(x => x.Larger, 5).With(x => x.Smaller, 3));
+    }
+    [Theory]
+    [InlineData(3,true)]
+    [InlineData(5,false)]
+    public void RuleSmallerMultipleOfSmaller(int i, bool expected)
+    {
+        var settings = fix.Create<RulesSettings>();
+        options.Setup(e => e.Value).Returns(settings);
+        var sut = GetSut();
+        var result = sut.IsSmaller(i);
+        Assert.Equal(expected, result);
+    }
+    [Theory]
+    [InlineData(3, false)]
+    [InlineData(5, true)]
+    public void RuleLargeMultipleOfLarge(int i, bool expected)
+    {
+        var settings = fix.Create<RulesSettings>();
+        options.Setup(e => e.Value).Returns(settings);
+        var sut = GetSut();
+        var result = sut.IsLarger(i);
+        Assert.Equal(expected, result);
+    }
 
-        [Fact]
-        public void Rule3FalseOnTimes3Plus1()
-        {
-            baseValue = new Random().Next(33) * 3 + 1;
-            var sut = GetSut();
-            Assert.False(sut.Rule3());
-        }
-        [Fact]
-        public void Rule5TrueOnTimes3()
-        {
-            baseValue = new Random().Next(20) * 5;
-            var sut = GetSut();
-            Assert.True(sut.Rule5());
-        }
-
-        [Fact]
-        public void Rule5FalseOnTimes3Plus1()
-        {
-            baseValue = new Random().Next(20) * 5 + 1;
-            var sut = GetSut();
-            Assert.False(sut.Rule5());
-        }
-
-        private Rules GetSut()
-        {
-            return new Rules(baseValue);
-        }
+    private Rules GetSut()
+    {
+        return new Rules(options.Object);
     }
 }

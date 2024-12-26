@@ -1,48 +1,48 @@
+﻿using System.Globalization;
+using AutoFixture;
 using FizzBuzz.Cli;
+using Microsoft.Extensions.Options;
+using Moq;
 
-namespace FizzBuzz.CliTests;
-
-public class FormatterTests
+namespace FizzBuzz.CliTests
 {
-    private int i = 0;
-    [Fact]
-    public void MakesFizz()
+    public class FormatterTests
     {
-        i = 3;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("Fizz", result);
-    }
+        private readonly CultureInfo invariantCulture = CultureInfo.InvariantCulture;
 
-    [Fact]
-    public void MakesBuzz()
-    {
-        i = 5;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("Buzz", result);
-    }
+        private readonly Mock<IOptions<FormatterSettings>> options = new();
+        private readonly Fixture fix = new();
 
-    [Fact]
-    public void MakesFizzBuzz()
-    {
-        i = 15;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("FizzBuzz", result);
-    }
+        private readonly Mock<IRules> rules = new();
 
-    [Fact]
-    public void MakesDigits()
-    {
-        i = 16;
-        var sut = GetSut();
-        var result = sut.FormatWithRules();
-        Assert.Equal("16", result);
-    }
+        [Theory]
+        [InlineData(true, false, "A1", "A2", "A1")]
+        [InlineData(false, true, "B1", "B2", "B2")]
+        [InlineData(true, true, "C1", "C2", "C1C2")]
+        public void FormattingKnownRules(
+            bool smallerRule, 
+            bool largeRule,
+            string smallerKey,
+            string largerKey,
+            string expected)
+        {
+            var setting = fix.Build<FormatterSettings>()
+                .With(e => e.Larger, largerKey)
+                .With(e => e.Smaller, smallerKey)
+                .Create();
+            var i = fix.Create<int>();
+            options.Setup(e => e.Value).Returns(setting);
+            rules.Setup(e => e.IsLarger(i)).Returns(largeRule);
+            rules.Setup(e => e.IsSmaller(i)).Returns(smallerRule);
 
-    private Formatter GetSut()
-    {
-        return new Formatter(i, new Rules(i));
+            var sut = GetSut();
+            var result = sut.Format(i);
+            Assert.Equal(expected, result);
+        }
+
+        private Formatter GetSut()
+        {
+            return new Formatter(invariantCulture, options.Object, rules.Object);
+        }
     }
 }
