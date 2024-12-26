@@ -1,14 +1,10 @@
+using Microsoft.Extensions.Options;
+
 namespace FizzBuzz.Cli;
 
-public class Rules : IRules
+public class Rules(IOptions<RulesSettings> options) : IRules
 {
-    public bool IsSmaller(int i)
-    {
-        return i % 3 == 0;
-    }
+    public bool IsSmaller(int i) => i % options.Value.Smaller == 0;
 
-    public bool IsLarger(int i)
-    {
-        return i % 5 == 0;
-    }
+    public bool IsLarger(int i) => i % options.Value.Larger == 0;
 }
