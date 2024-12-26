@@ -23,7 +23,7 @@ namespace FizzBuzz.CliTests
             {
                 Larger = "Buzz",
                 Smaller = "Fizz"
-            }), new Rules());
+            }), new Rules(new OptionsWrapper<RulesSettings>(new RulesSettings(){Smaller = 3, Larger = 5})));
         }
     }
 }

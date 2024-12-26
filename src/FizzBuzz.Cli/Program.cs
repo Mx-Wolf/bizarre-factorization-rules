@@ -18,10 +18,16 @@ internal class Program
             Hi = 100,
             Lo = 1,
         };
+        var rulesSettings = new RulesSettings()
+        {
+            Larger = 5,
+            Smaller = 3,
+        };
         var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
         var generatorOptions = new OptionsWrapper<GeneratorSettings>(generatorSettings);
+        var rulesOptions = new OptionsWrapper<RulesSettings>(rulesSettings);
 
-        var rules = new Rules();
+        var rules = new Rules(rulesOptions);
 
         var formatter = new Formatter(outFormatProvider, formatterOptions, rules);
         var generator = new Generator(generatorOptions);

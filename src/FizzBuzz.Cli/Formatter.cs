@@ -18,7 +18,7 @@ public class Formatter
     }
 
     public string Format(int i) =>
-        (rules.IsSmaller1(i), rules.IsLarger1(i)) switch
+        (rules.IsSmaller(i), rules.IsLarger(i)) switch
         {
             (true, true) => this.both,
             (true, _) => this.options.Value.Smaller,
