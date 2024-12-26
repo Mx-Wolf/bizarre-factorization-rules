@@ -1,17 +1,35 @@
 ﻿using System.Globalization;
+using AutoFixture;
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
+using Moq;
 
 namespace FizzBuzz.CliTests
 {
     public class FormatterTests
     {
+        private readonly CultureInfo invariantCulture = CultureInfo.InvariantCulture;
+
+        private readonly Mock<IOptions<FormatterSettings>> options = new();
+        private readonly Fixture fix = new();
+
+        private readonly Mock<IRules> rules = new ();
+
         [Theory]
-        [InlineData(3, "Fizz")]
-        [InlineData(5, "Buzz")]
-        [InlineData(15, "FizzBuzz")]
-        public void FormattingKnownRules(int i, string expected)
+        [InlineData(true, false, "A1", "A2", "A1")]
+        [InlineData(false, true, "B1","B2","B2")]
+        [InlineData(true, true, "C1", "C2", "C1C2")]
+        public void FormattingKnownRules(bool smallerRule, bool largeRule, string smallerKey, string largerKey, string expected)
         {
+            var setting = fix.Build<FormatterSettings>()
+                .With(e=>e.Larger,largerKey)
+                .With(e=>e.Smaller, smallerKey)
+                .Create();
+            var i = fix.Create<int>();
+            options.Setup(e => e.Value).Returns(setting);
+            rules.Setup(e => e.IsLarger(i)).Returns(largeRule);
+            rules.Setup(e => e.IsSmaller(i)).Returns(smallerRule);
+
             var sut = GetSut();
             var result = sut.Format(i);
             Assert.Equal(expected, result);
@@ -19,11 +37,7 @@ namespace FizzBuzz.CliTests
 
         private Formatter GetSut()
         {
-            return new Formatter(CultureInfo.InvariantCulture, new OptionsWrapper<FormatterSettings>(new FormatterSettings()
-            {
-                Larger = "Buzz",
-                Smaller = "Fizz"
-            }), new Rules());
+            return new Formatter(invariantCulture, options.Object, rules.Object);
         }
     }
 }
