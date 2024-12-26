@@ -1,8 +1,12 @@
-namespace FizzBuzz.Cli;
-
-public class Rules : IRules
+public class Rules
 {
-    public bool RuleSmallerDivisor(int i) => i % 3 == 0;
+    public bool IsSmaller1(int i)
+    {
+        return i % 3 == 0;
+    }
 
-    public bool RuleLargerDivisor(int i) => i % 5 == 0;
+    public bool IsLarger1(int i)
+    {
+        return i % 5 == 0;
+    }
 }
