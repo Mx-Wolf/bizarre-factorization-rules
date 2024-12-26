@@ -1,19 +1,33 @@
-﻿for (var i = 1; i <= 100; i++)
+﻿using Microsoft.Extensions.Options;
+
+namespace FizzBuzz.Cli;
+
+internal class Program
 {
-    if (i % 3 == 0 && i % 5 == 0)
+    public static void Main(string[] args)
     {
-        Console.WriteLine("FizzBuzz");
-    }
-    else if (i % 3 == 0)
-    {
-        Console.WriteLine("Fizz");
-    }
-    else if (i % 5 == 0)
-    {
-        Console.WriteLine("Buzz");
-    }
-    else
-    {
-        Console.WriteLine(i);
+        var textWriter = Console.Out;
+        var outFormatProvider = textWriter.FormatProvider;
+        var formatterSettings = new FormatterSettings
+        {
+            Larger = "Buzz",
+            Smaller = "Fizz"
+        };
+        var generatorSettings = new GeneratorSettings
+        {
+            Hi = 100,
+            Lo = 1,
+        };
+        var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
+        var generatorOptions = new OptionsWrapper<GeneratorSettings>(generatorSettings);
+
+        var rules = new Rules();
+
+        var formatter = new Formatter(outFormatProvider, formatterOptions, rules);
+        var generator = new Generator(generatorOptions);
+        var collector = new Collector(textWriter);
+        var driver = new Driver(generator, formatter, collector);
+
+        driver.Execute();
     }
 }
