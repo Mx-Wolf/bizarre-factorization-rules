@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;
 
-public class Generator(OptionsWrapper<GeneratorSettings> options)
+public class Generator(OptionsWrapper<GeneratorSettings> options) : IGenerator
 {
     public IEnumerable<int> GetRange()
     {

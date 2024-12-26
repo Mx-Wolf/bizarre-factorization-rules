@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;
 
-public class Formatter
+public class Formatter : IFormatter
 {
     private readonly IFormatProvider outFormatProvider;
     private readonly IOptions<FormatterSettings> options;
