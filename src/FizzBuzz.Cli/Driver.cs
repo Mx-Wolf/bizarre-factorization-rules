@@ -1,12 +1,13 @@
-namespace FizzBuzz.Cli;
+using FizzBuzz.Cli;
 
-public class Driver(IGenerator generator, IFormatter formatter, ICollector collector) : IDriver
+public class Driver(Generator generator, Formatter formatter, Collector collector)
 {
     public void Execute()
     {
-        foreach (var i in generator.GetSequence())
+        foreach (var i in generator.GetRange())
         {
-            collector.Collect(formatter.Format(i));
+            var line = formatter.Format(i);
+            collector.Collect(line);
         }
     }
 }
