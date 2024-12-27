@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FizzBuzz.Cli;
 
@@ -6,37 +7,15 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-        var textWriter = Console.Out;
-        var outFormatProvider = textWriter.FormatProvider;
-        
-        var formatterSettings = new FormatterSettings
-        {
-            Larger = "Buzz",
-            Smaller = "Fizz"
-        };
-        var generatorSettings = new GeneratorSettings
-        {
-            Hi = 100,
-            Lo = 1,
-        };
-        var rulesSettings = new RulesSettings
-        {
-            Larger = 5, 
-            Smaller = 3
-        };
-        
-        var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
-        var generatorOptions = new OptionsWrapper<GeneratorSettings>(generatorSettings);
-        var optionsWrapper = new OptionsWrapper<RulesSettings>(rulesSettings);
-        
-        var rules = new Rules(optionsWrapper);
-
-        var formatter = new Formatter(outFormatProvider, formatterOptions, rules);
-        var generator = new Generator(generatorOptions);
-        var collector = new Collector(textWriter);
-
-        var driver = new Driver(generator, formatter, collector);
-
-        driver.Execute();
+        new ServiceCollection()
+            .Bootstrap(
+                new ConfigurationBuilder()
+                    .AddCommandLine(args)
+                    .AddJsonFile("appsettings.json", optional: true)
+                    .AddUserSecrets<Program>(optional: true)
+                    .Build())
+            .BuildServiceProvider()
+            .GetRequiredService<IDriver>()
+            .Execute();
     }
 }
