@@ -11,12 +11,27 @@ internal static class Program
             Fizz = FormatterSettings.FizzInternal,
             Buzz = FormatterSettings.BuzzInternal,
         };
-        var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
-        var formatter = new Formatter(formatterOptions);
-        for (var i = 1; i <= 100; i++)
+        var rulesSettings = new RulesSettings
         {
-            var format = formatter.Format(i);
-            Console.WriteLine(format);
-        }
+            LargerDivisor = RulesSettings.LargerDivisorInternal,
+            SmallerDivisor = RulesSettings.SmallerDivisorInternal,
+        };
+
+        var generatorSettings = new GeneratorSettings()
+        {
+            LowerBoundary = GeneratorSettings.LowerBoundaryInternal,
+            UpperBoundary = GeneratorSettings.UpperBoundaryInternal,
+        };
+
+        var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
+        var rulesOptions = new OptionsWrapper<RulesSettings>(rulesSettings);
+        var generatorOptions = new OptionsWrapper<GeneratorSettings>(generatorSettings);
+
+        var rules = new Rules(rulesOptions);
+        var formatter = new Formatter(formatterOptions, rules);
+        var generator = new Generator(generatorOptions);
+        var collector = new Collector();
+
+        new Driver(generator, formatter, collector).Execute();
     }
 }

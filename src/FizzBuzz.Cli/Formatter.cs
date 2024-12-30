@@ -2,28 +2,20 @@ using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;
 
-public class Formatter(IOptions<FormatterSettings> options)
+public class Formatter(IOptions<FormatterSettings> options, Rules rules)
 {
     private readonly string fizzBuzz = options.Value.FizzBuzz();
 
     public string Format(int i)
     {
-        if (i % 3 == 0 && i % 5 == 0)
+        return (
+                rules.MultipleToSmallDivisor(i), 
+                rules.MultipleToLargeDivisor(i)) switch
         {
-            return fizzBuzz;
-        }
-
-        if (i % 3 == 0)
-        {
-            return options.Value.Fizz;
-        }
-
-        if (i % 5 == 0)
-        {
-            return options.Value.Buzz;
-        }
-
-        var value = i.ToString();
-        return (value);
+            (true, true) => fizzBuzz,
+            (true, _) => options.Value.Fizz,
+            (_, true) => options.Value.Buzz,
+            _ => i.ToString(),
+        };
     }
 }

@@ -28,7 +28,7 @@ namespace FizzBuzz.CliTests
             {
                 Fizz = FormatterSettings.FizzInternal,
                 Buzz = FormatterSettings.BuzzInternal,
-            }));
+            }), new Rules(new OptionsWrapper<RulesSettings>(RulesSettings.CreateDefault())));
         }
     }
 }
