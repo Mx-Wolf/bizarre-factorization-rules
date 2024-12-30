@@ -1,20 +1,29 @@
-﻿using FizzBuzz.Cli;
+﻿using AutoFixture;
+using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
+using Moq;
 
-namespace FizzBuzz.CliTests;
-
-public class GeneratorTests
+namespace FizzBuzz.CliTests
 {
-    [Fact]
-    public void CountsIncludeBoundaries()
+    public class GeneratorTests
     {
-        var sut = GetSut();
-        var count = sut.GetRange().Count();
-        Assert.Equal(100, count);
-    }
+        private readonly Fixture fix = new();
+        private readonly Mock<IOptions<GeneratorSettings>> options = new();
+        [Fact]
+        public void FailsOnInvertedRange()
+        {
+            var settings = fix.Build<GeneratorSettings>()
+                .With(e => e.LowerBoundary, 100)
+                .With(e => e.UpperBoundary,1)
+                .Create();
+            options.Setup(e => e.Value).Returns(settings);
+            var sut = GetSut();
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetRange());
+        }
 
-    private Generator GetSut()
-    {
-        return new Generator(new OptionsWrapper<GeneratorSettings>(new GeneratorSettings() { Hi = 100, Lo = 1 }));
+        private Generator GetSut()
+        {
+            return new Generator(options.Object);
+        }
     }
 }

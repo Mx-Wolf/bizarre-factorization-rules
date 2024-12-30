@@ -1,9 +1,9 @@
 namespace FizzBuzz.Cli;
 
-public class Collector(TextWriter writer)
+public class Collector : ICollector
 {
-    public void Collect(string line)
+    public void Collect(string format)
     {
-        writer.WriteLine(line);
+        Console.WriteLine(format);
     }
 }

@@ -1,39 +1,26 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FizzBuzz.Cli;
 
-internal class Program
+internal static class Program
 {
     public static void Main(string[] args)
     {
-        var textWriter = Console.Out;
-        var outFormatProvider = textWriter.FormatProvider;
-        var formatterSettings = new FormatterSettings
-        {
-            Larger = "Buzz",
-            Smaller = "Fizz"
-        };
-        var generatorSettings = new GeneratorSettings
-        {
-            Hi = 100,
-            Lo = 1,
-        };
-        var rulesSettings = new RulesSettings()
-        {
-            Larger = 5,
-            Smaller = 3,
-        };
-        var formatterOptions = new OptionsWrapper<FormatterSettings>(formatterSettings);
-        var generatorOptions = new OptionsWrapper<GeneratorSettings>(generatorSettings);
-        var rulesOptions = new OptionsWrapper<RulesSettings>(rulesSettings);
+        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true).Build();
+        var services = new ServiceCollection();
+        services.AddOptions<FormatterSettings>().Bind(configuration.GetSection(nameof(FormatterSettings)));
+        services.AddOptions<RulesSettings>().Bind(configuration.GetSection(nameof(RulesSettings)));
+        services.AddOptions<GeneratorSettings>().Bind(configuration.GetSection(nameof(GeneratorSettings)));
 
-        var rules = new Rules(rulesOptions);
-
-        var formatter = new Formatter(outFormatProvider, formatterOptions, rules);
-        var generator = new Generator(generatorOptions);
-        var collector = new Collector(textWriter);
-        var driver = new Driver(generator, formatter, collector);
-
+        services.AddSingleton<IRules, Rules>();
+        services.AddSingleton<IFormatter, Formatter>();
+        services.AddSingleton<IGenerator, Generator>();
+        services.AddSingleton<ICollector, Collector>();
+        services.AddSingleton<IDriver, Driver>();
+        
+        var serviceProvider = services.BuildServiceProvider();
+        var driver = serviceProvider.GetRequiredService<IDriver>();
         driver.Execute();
     }
 }
