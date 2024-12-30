@@ -1,6 +1,6 @@
 namespace FizzBuzz.Cli;
 
-public class Driver(Generator generator, Formatter formatter, Collector collector)
+public class Driver(IGenerator generator, IFormatter formatter, ICollector collector) : IDriver
 {
     public void Execute()
     {

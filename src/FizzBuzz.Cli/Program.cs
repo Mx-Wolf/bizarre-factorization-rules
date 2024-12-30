@@ -32,6 +32,8 @@ internal static class Program
         var generator = new Generator(generatorOptions);
         var collector = new Collector();
 
-        new Driver(generator, formatter, collector).Execute();
+        var driver = new Driver(generator, formatter, collector);
+
+        driver.Execute();
     }
 }

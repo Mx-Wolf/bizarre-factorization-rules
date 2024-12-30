@@ -19,7 +19,7 @@ namespace FizzBuzz.CliTests
         {
             var settings = fix.Build<GeneratorSettings>()
                 .With(e => e.LowerBoundary, 100)
-                .With(e => e.UpperBoundary)
+                .With(e => e.UpperBoundary,1)
                 .Create();
             options.Setup(e => e.Value).Returns(settings);
             var sut = GetSut();

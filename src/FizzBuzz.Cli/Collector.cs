@@ -1,6 +1,6 @@
 namespace FizzBuzz.Cli;
 
-public class Collector
+public class Collector : ICollector
 {
     public void Collect(string format)
     {

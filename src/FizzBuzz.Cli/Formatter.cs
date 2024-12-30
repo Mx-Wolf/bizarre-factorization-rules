@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;
 
-public class Formatter(IOptions<FormatterSettings> options, Rules rules)
+public class Formatter(IOptions<FormatterSettings> options, IRules rules) : IFormatter
 {
     private readonly string fizzBuzz = options.Value.FizzBuzz();
 
