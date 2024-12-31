@@ -10,7 +10,6 @@ internal static class Program
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
-            .AddUserSecrets(Assembly.GetExecutingAssembly())
             .Build();
 
         var driver = new ServiceCollection()
