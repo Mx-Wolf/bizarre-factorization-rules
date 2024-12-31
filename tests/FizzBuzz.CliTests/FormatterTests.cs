@@ -14,7 +14,6 @@ namespace FizzBuzz.CliTests
         private readonly Mock<IRules> rules = new();
         private readonly Fixture fix = new();
 
-        private readonly Mock<IRules> rules = new();
 
 
         [Theory]

@@ -21,6 +21,6 @@ public class CollectorTests
 
     private Collector GetSut()
     {
-        return new Collector(this.logger.Object, Console.Out, this.writer.Object);
+        return new Collector(this.logger.Object, this.writer.Object);
     }
 }
