@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System.Globalization;
+using AutoFixture;
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -7,11 +8,14 @@ namespace FizzBuzz.CliTests
 {
     public class FormatterTests
     {
+        private readonly CultureInfo invariantCulture = CultureInfo.InvariantCulture;
+
         private readonly Mock<IOptions<FormatterSettings>> options = new();
         private readonly Mock<IRules> rules = new();
         private readonly Fixture fix = new();
 
-        
+        private readonly Mock<IRules> rules = new();
+
 
         [Theory]
         [InlineData(true, true)]

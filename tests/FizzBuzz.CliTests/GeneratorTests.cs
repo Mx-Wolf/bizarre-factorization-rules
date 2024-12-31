@@ -5,24 +5,24 @@ using Moq;
 
 namespace FizzBuzz.CliTests
 {
-    public class GeneratorTests
-    {
+public class GeneratorTests
+{
         private readonly Fixture fix = new();
         private readonly Mock<IOptions<GeneratorSettings>> options = new();
-        [Fact]
+    [Fact]
         public void FailsOnInvertedRange()
-        {
+    {
             var settings = fix.Build<GeneratorSettings>()
                 .With(e => e.LowerBoundary, 100)
                 .With(e => e.UpperBoundary,1)
                 .Create();
             options.Setup(e => e.Value).Returns(settings);
-            var sut = GetSut();
+        var sut = GetSut();
             Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetRange());
-        }
+    }
 
-        private Generator GetSut()
-        {
+    private Generator GetSut()
+    {
             return new Generator(options.Object);
         }
     }

@@ -5,7 +5,7 @@ namespace FizzBuzz.Cli;
 public class Formatter(IOptions<FormatterSettings> options, IRules rules) : IFormatter
 {
     private readonly string fizzBuzz = options.Value.FizzBuzz();
-
+    
     public string Format(int i)
     {
         return (
@@ -17,5 +17,5 @@ public class Formatter(IOptions<FormatterSettings> options, IRules rules) : IFor
             (_, true) => options.Value.Buzz,
             _ => i.ToString(),
         };
-    }
+}
 }
