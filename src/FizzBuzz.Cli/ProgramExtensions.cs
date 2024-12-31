@@ -11,10 +11,16 @@ public static class ProgramExtensions
         services.AddOptions<RulesSettings>().Bind(configuration.GetSection(nameof(RulesSettings)));
         services.AddOptions<GeneratorSettings>().Bind(configuration.GetSection(nameof(GeneratorSettings)));
 
+        services.AddSingleton(Console.Out);
+
         services.AddSingleton<IRules, Rules>();
+
         services.AddSingleton<IFormatter, Formatter>();
+
         services.AddSingleton<IGenerator, Generator>();
+
         services.AddSingleton<ICollector, Collector>();
+
         services.AddSingleton<IDriver, Driver>();
         return services;
     }
