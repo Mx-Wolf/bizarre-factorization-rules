@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FizzBuzz.Cli;
@@ -9,6 +10,7 @@ internal static class Program
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
+            .AddUserSecrets(Assembly.GetExecutingAssembly())
             .Build();
 
         var driver = new ServiceCollection()
