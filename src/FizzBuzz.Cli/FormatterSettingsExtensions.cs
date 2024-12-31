@@ -2,5 +2,8 @@ namespace FizzBuzz.Cli;
 
 public static class FormatterSettingsExtensions
 {
-    public static string Both(this FormatterSettings self) => $"{self.Smaller}{self.Larger}";
+    public static string FizzBuzz(this FormatterSettings formatterSettings)
+    {
+        return $"{formatterSettings.Fizz}{formatterSettings.Buzz}";
+    }
 }

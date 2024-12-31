@@ -11,38 +11,68 @@ namespace FizzBuzz.CliTests
         private readonly CultureInfo invariantCulture = CultureInfo.InvariantCulture;
 
         private readonly Mock<IOptions<FormatterSettings>> options = new();
+        private readonly Mock<IRules> rules = new();
         private readonly Fixture fix = new();
 
-        private readonly Mock<IRules> rules = new();
+
 
         [Theory]
-        [InlineData(true, false, "A1", "A2", "A1")]
-        [InlineData(false, true, "B1", "B2", "B2")]
-        [InlineData(true, true, "C1", "C2", "C1C2")]
-        public void FormattingKnownRules(
-            bool smallerRule, 
-            bool largeRule,
-            string smallerKey,
-            string largerKey,
-            string expected)
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        public void UsesInjectedServiceForRule(bool smaller, bool larger)
         {
-            var setting = fix.Build<FormatterSettings>()
-                .With(e => e.Larger, largerKey)
-                .With(e => e.Smaller, smallerKey)
-                .Create();
+            var settings = fix.Create<FormatterSettings>();
+            options.Setup(e => e.Value).Returns(settings);
+            rules.Setup(e => e.MultipleToSmallDivisor(It.IsAny<int>())).Returns(smaller);
+            rules.Setup(e => e.MultipleToLargeDivisor(It.IsAny<int>())).Returns(larger);
+
             var i = fix.Create<int>();
-            options.Setup(e => e.Value).Returns(setting);
-            rules.Setup(e => e.IsLarger(i)).Returns(largeRule);
-            rules.Setup(e => e.IsSmaller(i)).Returns(smallerRule);
 
             var sut = GetSut();
+            sut.Format(i);
+
+            rules.Verify(e => e.MultipleToSmallDivisor(It.IsAny<int>()), Times.Exactly(1));
+            rules.Verify(e => e.MultipleToLargeDivisor(It.IsAny<int>()), Times.Exactly(1));
+        }
+
+        [Theory]
+        [InlineData(true, true, "ab")]
+        [InlineData(false, true, "b")]
+        [InlineData(true, false, "a")]
+        [InlineData(false, false, "16")]
+        public void UsesSettingsWithRules(bool smaller, bool larger, string expected)
+        {
+            var settings = fix.Build<FormatterSettings>()
+                .With(e => e.Fizz, "a")
+                .With(e => e.Buzz, "b")
+                .Create();
+            options.Setup(e => e.Value).Returns(settings);
+            rules.Setup(e => e.MultipleToLargeDivisor(It.IsAny<int>())).Returns(larger);
+            rules.Setup(e => e.MultipleToSmallDivisor(It.IsAny<int>())).Returns(smaller);
+
+            var i = 16;
+
+            var sut = GetSut();
+
             var result = sut.Format(i);
+
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CannotBeConstructedWithNullSetting()
+        {
+
+            Assert.Throws<NullReferenceException>(GetSut);
         }
 
         private Formatter GetSut()
         {
-            return new Formatter(invariantCulture, options.Object, rules.Object);
+            return new Formatter(
+                options.Object,
+                rules.Object);
         }
     }
 }

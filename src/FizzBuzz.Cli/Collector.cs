@@ -1,6 +1,12 @@
+using Microsoft.Extensions.Logging;
+
 namespace FizzBuzz.Cli;
 
-public class Collector(TextWriter writer) : ICollector
+public class Collector(ILogger<Collector> logger, TextWriter textWriter) : ICollector
 {
-    public void Collect(string line) => writer.WriteLine(line);
+    public void Collect(string format)
+{
+        logger.CollectingFormattedLine(format);
+        textWriter.WriteLine(format);
+    }
 }

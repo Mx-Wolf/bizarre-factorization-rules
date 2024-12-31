@@ -1,19 +1,25 @@
 using FizzBuzz.Cli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+namespace FizzBuzz.Cli;
 
 public static class ProgramExtensions
 {
     public static IServiceCollection Bootstrap(this IServiceCollection services, IConfigurationRoot configuration)
     {
-        services.AddSingleton(Console.Out);
-        services.AddSingleton(sp => sp.GetRequiredService<TextWriter>().FormatProvider);
+        services.AddLogging(b =>
+        {
+            b.AddConfiguration(configuration.GetSection("Logging"));
+            b.AddConsole();
+        });
+        
+        services.AddOptions<FormatterSettings>().Bind(configuration.GetSection(nameof(FormatterSettings)));
+        services.AddOptions<RulesSettings>().Bind(configuration.GetSection(nameof(RulesSettings)));
+        services.AddOptions<GeneratorSettings>().Bind(configuration.GetSection(nameof(GeneratorSettings)));
 
-        services.AddOptions()
-            .Configure<FormatterSettings>(configuration.GetSection(nameof(FormatterSettings)))
-            .Configure<GeneratorSettings>(configuration.GetSection(nameof(GeneratorSettings)))
-            .Configure<RulesSettings>(configuration.GetSection(nameof(RulesSettings)))
-            ;
+        services.AddSingleton(Console.Out);
 
         services.AddSingleton<IRules, Rules>();
 

@@ -3,42 +3,78 @@ using FizzBuzz.Cli;
 using Microsoft.Extensions.Options;
 using Moq;
 
-namespace FizzBuzz.CliTests;
-
+namespace FizzBuzz.CliTests
+{
 public class RulesTests
 {
-    private Mock<IOptions<RulesSettings>> options = new();
+        private readonly Mock<IOptions<RulesSettings>> options = new();
     private readonly Fixture fix = new();
 
-    public RulesTests()
+        [Fact]
+        public void KnownLargerDivisibility()
     {
-        fix.Customize<RulesSettings>(e => e.With(x => x.Larger, 5).With(x => x.Smaller, 3));
+            var settings = fix.Create<RulesSettings>();
+            options.Setup(e => e.Value).Returns(settings);
+            var ix = fix.Create<int>() * settings.LargerDivisor;
+            var sut = GetSut();
+            var result = sut.MultipleToLargeDivisor(ix);
+            Assert.True(result);
     }
-    [Theory]
-    [InlineData(3,true)]
-    [InlineData(5,false)]
-    public void RuleSmallerMultipleOfSmaller(int i, bool expected)
+        [Fact]
+        public void KnownLargerInDivisibility()
     {
         var settings = fix.Create<RulesSettings>();
         options.Setup(e => e.Value).Returns(settings);
+            var ix = fix.Create<int>() * settings.LargerDivisor +1;
         var sut = GetSut();
-        var result = sut.IsSmaller(i);
-        Assert.Equal(expected, result);
+            var result = sut.MultipleToLargeDivisor(ix);
+            Assert.False(result);
+        }
+        [Fact]
+        public void KnownSmallerDivisibility()
+        {
+            var settings = fix.Create<RulesSettings>();
+            options.Setup(e => e.Value).Returns(settings);
+            var ix = fix.Create<int>() * settings.SmallerDivisor;
+            var sut = GetSut();
+            var result = sut.MultipleToSmallDivisor(ix);
+            Assert.True(result);
     }
-    [Theory]
-    [InlineData(3, false)]
-    [InlineData(5, true)]
-    public void RuleLargeMultipleOfLarge(int i, bool expected)
+        [Fact]
+        public void KnownSmallerInDivisibility()
     {
         var settings = fix.Create<RulesSettings>();
         options.Setup(e => e.Value).Returns(settings);
+            var ix = fix.Create<int>() * settings.SmallerDivisor + 1;
+            var sut = GetSut();
+            var result = sut.MultipleToSmallDivisor(ix);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void ThrowsOnZeroSettingForSmaller()
+        {
+            var settings = fix.Build<RulesSettings>()
+                .With(e => e.SmallerDivisor, 0)
+                .Create();
+            options.Setup(e => e.Value).Returns(settings);
+            var sut = GetSut();
+            Assert.Throws<DivideByZeroException>(() => sut.MultipleToSmallDivisor(1));
+        }
+        [Fact]
+        public void ThrowsOnZeroSettingForLarger()
+        {
+            var settings = fix.Build<RulesSettings>()
+                .With(e => e.LargerDivisor, 0)
+                .Create();
+            options.Setup(e => e.Value).Returns(settings);
         var sut = GetSut();
-        var result = sut.IsLarger(i);
-        Assert.Equal(expected, result);
+            Assert.Throws<DivideByZeroException>(() => sut.MultipleToLargeDivisor(1));
     }
 
     private Rules GetSut()
     {
         return new Rules(options.Object);
     }
+}
 }

@@ -2,16 +2,20 @@ using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;
 
-public class Formatter(IFormatProvider formatProvider, IOptions<FormatterSettings> options, IRules rules) : IFormatter
+public class Formatter(IOptions<FormatterSettings> options, IRules rules) : IFormatter
 {
-    private readonly string both = options.Value.Both();
+    private readonly string fizzBuzz = options.Value.FizzBuzz();
     
-    public string Format(int i) =>
-        (rules.IsSmaller(i), rules.IsLarger(i)) switch
+    public string Format(int i)
+    {
+        return (
+                rules.MultipleToSmallDivisor(i), 
+                rules.MultipleToLargeDivisor(i)) switch
         {
-            (true, true) => this.both,
-            (true, _) => options.Value.Smaller,
-            (_, true) => options.Value.Larger,
-            _ => i.ToString(formatProvider)
+            (true, true) => fizzBuzz,
+            (true, _) => options.Value.Fizz,
+            (_, true) => options.Value.Buzz,
+            _ => i.ToString(),
         };
+}
 }

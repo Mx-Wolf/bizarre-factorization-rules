@@ -2,5 +2,5 @@ namespace FizzBuzz.Cli;
 
 public interface ICollector
 {
-    void Collect(string line);
+    void Collect(string format);
 }

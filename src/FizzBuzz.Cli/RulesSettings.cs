@@ -2,6 +2,6 @@ namespace FizzBuzz.Cli;
 
 public class RulesSettings
 {
-    public int Smaller { get; init; }
-    public int Larger { get; init; }
+    public required int LargerDivisor { get; init; }
+    public required int SmallerDivisor { get; init; }
 }
