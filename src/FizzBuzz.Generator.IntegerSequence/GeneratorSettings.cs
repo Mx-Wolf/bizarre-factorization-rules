@@ -1,4 +1,4 @@
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Generator.IntegerSequence;
 
 public class GeneratorSettings
 {

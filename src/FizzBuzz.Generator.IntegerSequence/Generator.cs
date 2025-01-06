@@ -1,7 +1,7 @@
 using FizzBuzz.Application;
 using Microsoft.Extensions.Options;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Generator.IntegerSequence;
 
 public class Generator(IOptions<GeneratorSettings> options) : IGenerator
 {
