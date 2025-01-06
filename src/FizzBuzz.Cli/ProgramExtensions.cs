@@ -1,5 +1,6 @@
 using FizzBuzz.Application;
 using FizzBuzz.Formatter.Divisibility;
+using FizzBuzz.Generator.IntegerSequence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,7 @@ public static class ProgramExtensions
 
         services.AddSingleton<IFormatter, Formatter.Divisibility.Formatter>();
 
-        services.AddSingleton<IGenerator, Generator>();
+        services.AddSingleton<IGenerator, Generator.IntegerSequence.Generator>();
 
         services.AddSingleton<ICollector, Collector.TextWriter.Collector>();
 

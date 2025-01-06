@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FizzBuzz.Formatter.Divisibility\FizzBuzz.Formatter.Divisibility.csproj" />
+    <ProjectReference Include="..\..\src\FizzBuzz.Generator.IntegerSequence\FizzBuzz.Generator.IntegerSequence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

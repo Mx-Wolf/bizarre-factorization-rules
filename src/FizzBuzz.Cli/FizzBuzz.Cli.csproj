@@ -21,6 +21,7 @@
     <ProjectReference Include="..\FizzBuzz.Application\FizzBuzz.Application.csproj" />
     <ProjectReference Include="..\FizzBuzz.Collector.TextWriter\FizzBuzz.Collector.TextWriter.csproj" />
     <ProjectReference Include="..\FizzBuzz.Formatter.Divisibility\FizzBuzz.Formatter.Divisibility.csproj" />
+    <ProjectReference Include="..\FizzBuzz.Generator.IntegerSequence\FizzBuzz.Generator.IntegerSequence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
