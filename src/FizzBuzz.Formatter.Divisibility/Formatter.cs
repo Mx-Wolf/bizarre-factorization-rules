@@ -1,6 +1,7 @@
+using FizzBuzz.Application;
 using Microsoft.Extensions.Options;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Formatter.Divisibility;
 
 public class Formatter(IOptions<FormatterSettings> options, IRules rules) : IFormatter
 {

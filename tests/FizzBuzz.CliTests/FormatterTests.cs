@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using AutoFixture;
 using FizzBuzz.Cli;
+using FizzBuzz.Formatter.Divisibility;
 using Microsoft.Extensions.Options;
 using Moq;
 
@@ -8,8 +9,6 @@ namespace FizzBuzz.CliTests
 {
     public class FormatterTests
     {
-        private readonly CultureInfo invariantCulture = CultureInfo.InvariantCulture;
-
         private readonly Mock<IOptions<FormatterSettings>> options = new();
         private readonly Mock<IRules> rules = new();
         private readonly Fixture fix = new();
@@ -68,9 +67,9 @@ namespace FizzBuzz.CliTests
             Assert.Throws<NullReferenceException>(GetSut);
         }
 
-        private Formatter GetSut()
+        private Formatter.Divisibility.Formatter GetSut()
         {
-            return new Formatter(
+            return new Formatter.Divisibility.Formatter(
                 options.Object,
                 rules.Object);
         }

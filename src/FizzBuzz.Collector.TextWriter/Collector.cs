@@ -1,8 +1,9 @@
+using FizzBuzz.Application;
 using Microsoft.Extensions.Logging;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Collector.TextWriter;
 
-public class Collector(ILogger<Collector> logger, TextWriter textWriter) : ICollector
+public class Collector(ILogger<Collector> logger, System.IO.TextWriter textWriter) : ICollector
 {
     public void Collect(string format)
 {

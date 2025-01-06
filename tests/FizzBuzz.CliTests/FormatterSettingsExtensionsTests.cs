@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FizzBuzz.Cli;
+using FizzBuzz.Formatter.Divisibility;
 
 namespace FizzBuzz.CliTests
 {

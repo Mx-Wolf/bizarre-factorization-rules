@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoFixture;
 using AutoFixture.Xunit2;
-using FizzBuzz.Cli;
+using FizzBuzz.Application;
 using Microsoft.Extensions.Logging;
 using Moq;
 

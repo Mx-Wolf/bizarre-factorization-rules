@@ -1,4 +1,5 @@
-using FizzBuzz.Cli;
+using FizzBuzz.Application;
+using FizzBuzz.Formatter.Divisibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,11 +24,11 @@ public static class ProgramExtensions
 
         services.AddSingleton<IRules, Rules>();
 
-        services.AddSingleton<IFormatter, Formatter>();
+        services.AddSingleton<IFormatter, Formatter.Divisibility.Formatter>();
 
         services.AddSingleton<IGenerator, Generator>();
 
-        services.AddSingleton<ICollector, Collector>();
+        services.AddSingleton<ICollector, Collector.TextWriter.Collector>();
 
         services.AddSingleton<IDriver, Driver>();
         return services;

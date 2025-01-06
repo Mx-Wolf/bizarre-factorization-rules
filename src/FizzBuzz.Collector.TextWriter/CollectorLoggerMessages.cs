@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Collector.TextWriter;
 
 public static partial class CollectorLoggerMessages
 {

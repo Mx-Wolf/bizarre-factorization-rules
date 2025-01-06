@@ -1,3 +1,4 @@
+using FizzBuzz.Application;
 using Microsoft.Extensions.Options;
 
 namespace FizzBuzz.Cli;

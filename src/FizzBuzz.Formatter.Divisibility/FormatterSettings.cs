@@ -1,4 +1,4 @@
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Formatter.Divisibility;
 
 public class FormatterSettings
 {

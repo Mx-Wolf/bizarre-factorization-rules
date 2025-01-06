@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace FizzBuzz.Cli;
+namespace FizzBuzz.Application;
 
 public class Driver(IGenerator generator, IFormatter formatter, ICollector collector, ILogger<Driver> logger) : IDriver
 {

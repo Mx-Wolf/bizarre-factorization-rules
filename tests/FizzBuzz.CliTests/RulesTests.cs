@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FizzBuzz.Cli;
+using FizzBuzz.Formatter.Divisibility;
 using Microsoft.Extensions.Options;
 using Moq;
 
