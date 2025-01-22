@@ -45,7 +45,6 @@
                 Console.SetOut(sw);
                 Program.Main([]);
                 result = sw.ToString();
-
             }
             finally
             {
