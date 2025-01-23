@@ -1,7 +1,14 @@
-﻿namespace FizzBuzz.CliTests
+﻿
+namespace FizzBuzz.CliTests
 {
     public class ProgramTests
     {
+        [Fact]
+        public void TheySayMakeItAsItIsNow()
+        {
+            var result = ResultHelper();
+            Assert.Equal(Expected.Text, result);
+        }
         [Fact]
         public void MainOutput100Lines()
         {
