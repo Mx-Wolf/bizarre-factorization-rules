@@ -1,25 +1,23 @@
-﻿public class Program
+﻿using FizzBuzz.Cli;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+public class Program
 {
     public static void Main(string[] args)
     {
-        for (var i = 1; i <= 100; i++)
-        {
-            if (i % 3 == 0 && i % 5 == 0)
-            {
-                Console.WriteLine("FizzBuzz");
-            }
-            else if (i % 3 == 0)
-            {
-                Console.WriteLine("Fizz");
-            }
-            else if (i % 5 == 0)
-            {
-                Console.WriteLine("Buzz");
-            }
-            else
-            {
-                Console.WriteLine(i);
-            }
-        }
+        var configuration = new ConfigurationBuilder()
+           .AddJsonFile("appsettings.json", optional: true)
+           .Build();
+
+        var services = new ServiceCollection();
+        services.AddSingleton<IDriver, Driver>();
+        services.AddSingleton<IFormatter, Formatter>();
+
+        services.Configure<FormatterSettings>(configuration.GetSection(FormatterSettings.Key));
+
+        var sp = services.BuildServiceProvider();
+        sp.GetRequiredService<IDriver>().Execute();
     }
+
 }
